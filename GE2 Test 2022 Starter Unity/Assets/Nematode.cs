@@ -65,11 +65,9 @@ public class Nematode : MonoBehaviour
     }
 
     IEnumerator Shoot(){
-        GameObject[] nematodes = GameObject.FindGameObjectsWithTag("Nematode");
-        Target = nematodes[UnityEngine.Random.Range(0, nematodes.Length)];
+
         
         GameObject bullet  = Instantiate(Bullet , transform.position, Quaternion.identity) as GameObject;
-        bullet.transform.LookAt(Target.transform.position);
         bullet.transform.parent = transform;
         yield return new WaitForSeconds(5);
     }
