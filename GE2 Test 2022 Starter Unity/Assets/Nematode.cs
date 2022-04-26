@@ -56,16 +56,14 @@ public class Nematode : MonoBehaviour
     void Start()
     {
         StartCoroutine(Shoot());
-
     }
 
     // Update is called once per frame
     void Update()
-    {       
-        
+    {                       
 
     }
-    
+
     IEnumerator Shoot(){
         GameObject[] nematodes = GameObject.FindGameObjectsWithTag("Nematode");
         Target = nematodes[UnityEngine.Random.Range(0, nematodes.Length)];
@@ -73,8 +71,8 @@ public class Nematode : MonoBehaviour
         GameObject bullet  = Instantiate(Bullet , transform.position, Quaternion.identity) as GameObject;
         bullet.transform.LookAt(Target.transform.position);
         bullet.transform.parent = transform;
-        StartCoroutine(Shoot());
         yield return new WaitForSeconds(5);
     }
+
 }
 

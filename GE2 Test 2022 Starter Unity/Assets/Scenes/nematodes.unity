@@ -470,6 +470,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   length: 20
   material: {fileID: 2100000, guid: 6e4fc4decf74e1c45909682693921aee, type: 2}
+  Target: {fileID: 0}
+  Bullet: {fileID: 4437724353740736725, guid: feb96329ce7f73d4289a75c4045cf18a, type: 3}
 --- !u!114 &5372656057005222719
 MonoBehaviour:
   m_ObjectHideFlags: 0
