@@ -10,17 +10,19 @@ public class Nematode : MonoBehaviour
 
     void Awake()
     {
+        length = Random.Range(5, 30);
         // Put your code here!
         for (int i = 0; i < length; i++) {
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = transform.position - transform.forward * i;
             sphere.transform.parent = transform;
             sphere.GetComponent<Renderer>().material.color = Color.HSVToRGB(i / (float)length, 1, 1);
-            // Attach noise wanderer script to first sphere
+
             if (i == 0) {
                 sphere.AddComponent<NoiseWander>();
                 sphere.AddComponent<NoiseWanderV>();
                 sphere.AddComponent<ObstacleAvoidance>();
+                sphere.AddComponent<Constrain>();
             }
             
             if (i <= length / 2) {
