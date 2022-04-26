@@ -6,12 +6,17 @@ public class Nematode : MonoBehaviour
 {
     public int length;
 
-    public Material material;    
+    public Material material;   
+
+    public GameObject Target;
+    public GameObject Bullet;
 
     void Awake()
     {
-        length = Random.Range(5, 30);
+        // length = Random.Range(5, 30);
+        length = 20;
         // Put your code here!
+        
         for (int i = 0; i < length; i++) {
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = transform.position - transform.forward * i;
@@ -23,14 +28,26 @@ public class Nematode : MonoBehaviour
                 sphere.AddComponent<NoiseWanderV>();
                 sphere.AddComponent<ObstacleAvoidance>();
                 sphere.AddComponent<Constrain>();
+                // Add tag "Nematode" to the first sphere
+                sphere.tag = "Nematode";
+                
             }
             
-            if (i <= length / 2) {
+            // sphere.transform.localScale = Vector3.one * (length - i) / length;
+
+            if (i < length / 2) {
                 sphere.transform.localScale = Vector3.one * (i + 1) / length;
             }
+
             if (i > length / 2) {
-                sphere.transform.localScale = Vector3.one * (i - 1) / length;                
-            }           
+                sphere.transform.localScale = Vector3.one * (length - i) / length;  
+            }        
+
+            if ( i == length / 2)
+            {
+                sphere.transform.localScale = Vector3.one * ( i + 1) / length;
+            }   
+            
         }
     }
 
@@ -38,14 +55,26 @@ public class Nematode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(Shoot());
 
-        
     }
 
     // Update is called once per frame
     void Update()
-    {
-    
+    {       
         
+
+    }
+    
+    IEnumerator Shoot(){
+        GameObject[] nematodes = GameObject.FindGameObjectsWithTag("Nematode");
+        Target = nematodes[UnityEngine.Random.Range(0, nematodes.Length)];
+        
+        GameObject bullet  = Instantiate(Bullet , transform.position, Quaternion.identity) as GameObject;
+        bullet.transform.LookAt(Target.transform.position);
+        bullet.transform.parent = transform;
+        StartCoroutine(Shoot());
+        yield return new WaitForSeconds(5);
     }
 }
+
